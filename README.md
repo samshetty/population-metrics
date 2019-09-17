@@ -39,41 +39,40 @@ Load online census data files into sqlite staging tables. Then transform the dat
            DROP TABLE IF EXISTS metropolitan_areas_population_by_year;
            
            CREATE TABLE metropolitan_areas_population_by_year AS
-           SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2011 AS YEAR, POPESTIMATE2011 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2012 AS YEAR, POPESTIMATE2012 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2013 AS YEAR, POPESTIMATE2013 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2014 AS YEAR, POPESTIMATE2014 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2015 AS YEAR, POPESTIMATE2015 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2016 AS YEAR, POPESTIMATE2016 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2017 AS YEAR, POPESTIMATE2017 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
-           UNION ALL
-           SELECT   [index], NAME, 2018 AS YEAR, POPESTIMATE2018 AS POPULATION
-           FROM     population_estimates
-           WHERE    LSAD = 'Metropolitan Statistical Area'
+            WITH population_data_cte AS
+            (
+               SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010, POPESTIMATE2011, 
+                        POPESTIMATE2012, POPESTIMATE2013, POPESTIMATE2014, POPESTIMATE2015, 
+                        POPESTIMATE2016, POPESTIMATE2017, POPESTIMATE2018
+               FROM     population_estimates
+               WHERE    LSAD = 'Metropolitan Statistical Area'
+            ) 
+              SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2011 AS YEAR, POPESTIMATE2011 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2012 AS YEAR, POPESTIMATE2012 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2013 AS YEAR, POPESTIMATE2013 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2014 AS YEAR, POPESTIMATE2014 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2015 AS YEAR, POPESTIMATE2015 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2016 AS YEAR, POPESTIMATE2016 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2017 AS YEAR, POPESTIMATE2017 AS POPULATION
+              FROM     population_data_cte
+              UNION ALL
+              SELECT   [index], NAME, 2018 AS YEAR, POPESTIMATE2018 AS POPULATION
+              FROM     population_data_cte
 
          ```
     
