@@ -1,4 +1,4 @@
-# Population and Unemployment metrics in sqlite 
+# Population and unemployment metrics in sqlite 
 
 Download online census data files, create sqlite staging tables and transform the data into fact table with metrics 
 
@@ -14,11 +14,11 @@ pip install -r requirements.txt
 
 ### Steps to execute
 
-* Run sqlite_load_as_is.py (attached)
+1. Run sqlite_load_as_is.py (attached)
   This python program downloads the online census data files, connects to sqlite, creates staging tables and loads the raw data
 
-* Next, run the below queries for the 2 Analyst requirements to get data in the required format (metric with dimensions) 
-** Task #1 - You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time. 
+2. Next, run the below queries for the 2 Analyst requirements to get data in the required format (metric with dimensions) 
+    1. **Task #1 - You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time. **
 ```
 --Pivots the population column into a metric from the staging data, and puts it into a fact table for easy querying
 CREATE TABLE IF NOT EXISTS metropolitan_areas_population_by_year AS
@@ -59,7 +59,7 @@ FROM     population_estimates
 WHERE    LSAD = 'Metropolitan Statistical Area'
 
 ```
-** Task #2 - A different analyst wants to know about population and unemployment rates of the US at the county level.
+   2. **Task #2 - A different analyst wants to know about population and unemployment rates of the US at the county level.**
 ```
 --Pivot the population and unemployment from 2 different sources into respective temp tables and join the 2 tables on the county column and year. Then insert it into a new fact table for querying
 DROP TABLE IF EXISTS temp_county_population_by_year;
@@ -152,9 +152,4 @@ ORDER BY NAME, YEAR
 
 ## Author
 
-* **Sam Shetty** - *Initial work* 
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
+* **Sam Shetty** 
