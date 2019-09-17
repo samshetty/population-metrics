@@ -4,10 +4,22 @@ import sqlite3
 import xlrd
 
 def create_database_connection(db_file_path):
+    """
+    Creates a database connection
+
+    db_file_path (string): local path to store the sqlite database
+    RETURNS: Open database connection
+    """
     conn = sqlite3.connect(db_file_path)
     return conn
 
 def load_data_into_tables(conn, file_urls):
+    """
+    Loads online census data files into a dataframe, then saves the dataframe data into a sqlite table
+
+    conn: sqlite open connection
+    file_urls (list): urls of files to load into database
+    """
     for file_url in file_urls:
         if file_url[1] == "csv":
             df = pd.read_csv(file_url[2], encoding="ISO-8859-1")
@@ -23,7 +35,6 @@ def main():
         db_file_path = os.path.join(os.path.dirname('__file__'), 'database.sqlite3')
         file_urls = []
         file_urls.append(["population_estimates", "csv", "https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/metro/totals/cbsa-est2018-alldata.csv"])
-        #file_urls.append(["counties_population", "csv", "https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/counties/totals/co-est2018-alldata.csv"])
         file_urls.append(["counties_unemployment", "xls", "https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.xls?v=9115.7"])
 
         conn = create_database_connection(db_file_path)
