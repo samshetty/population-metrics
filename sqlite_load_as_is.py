@@ -13,7 +13,7 @@ def create_database_connection(db_file_path):
     conn = sqlite3.connect(db_file_path)
     return conn
 
-def load_data_into_tables(conn, file_urls):
+def load_data_into_staging_tables(conn, file_urls):
     """
     Loads online census data files into a dataframe, then saves the dataframe data into a sqlite table
 
@@ -39,7 +39,7 @@ def main():
 
         conn = create_database_connection(db_file_path)
         with conn:
-            load_data_into_tables(conn, file_urls)
+            load_data_into_staging_tables(conn, file_urls)
     except Exception as e:
         print("Error: ", e)
 
