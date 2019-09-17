@@ -4,14 +4,6 @@ Load online census data files into sqlite staging tables. Then transform the dat
 
 ## Getting Started
 
-### Prerequisites
-
-Install requirements
-
-```
-pip install -r requirements.txt
-```
-
 ### Steps to execute
 
 1. Download repo to a local folder
@@ -28,12 +20,12 @@ pip install -r requirements.txt
    python sqlite_load_as_is.py
    ```
 
-   This python program creates a sqlite database in the same folder as itself and loads the below census data files into staging tables in it.
+   This python program loads the below census data files into staging tables in a sqlite database. The database gets saved in the same folder as the python program.
    
    https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/metro/totals/cbsa-est2018-alldata.csv
    https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.xls?v=9115.7
 
-4. Open the Run the below queries in a client like [DB Browser SQLite](https://sqlitebrowser.org/dl/) and convert the Analyst data into the required format of a metric with several dimensions.
+4. Open the sqlite database from the above step in a client like [DB Browser SQLite](https://sqlitebrowser.org/dl/). Run the below queries to convert the raw data into the Analyst required format of a metric with several dimensions.
     1. **Analyst requirement #1:**
 
          _You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time._
