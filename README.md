@@ -1,6 +1,6 @@
 # Population and unemployment metrics in sqlite 
 
-Download online census data files, create sqlite staging tables and transform the data into fact table with metrics 
+Load online census data files into sqlite staging tables. Then transform the data into the required format of a metric with several dimensions.
 
 ## Getting Started
 
@@ -16,16 +16,20 @@ pip install -r requirements.txt
 
 1. Run [sqlite_load_as_is.py](https://github.com/samshetty/sqlite/blob/master/sqlite_load_as_is.py)
 
-   This python program downloads the online census data files, creates staging tables in sqlite and loads raw data into them.
+   This python program loads the below census data files into sqlite staging tables.
+   
+   https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/metro/totals/cbsa-est2018-alldata.csv
+   https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/counties/totals/co-est2018-alldata.csv
+   https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.xls?v=9115.7
 
-2. Run the below queries to get data in the required final format (metric with dimensions) 
+2. Run the below queries in a client like [DB Browser SQLite](https://sqlitebrowser.org/dl/) to get the data in the required format of a metric with several dimensions.
     1. **Analyst requirement #1:**
 
          _You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time._
       
          **Query:**
 
-         Converts population columns for each year into a metric and puts it into a fact table ___metropolitan_areas_population_by_year___ for easy querying.
+         _Converts population columns for each year into a metric and puts it into a new table ___metropolitan_areas_population_by_year___ for easy querying._
        
          ```sql
            CREATE TABLE IF NOT EXISTS metropolitan_areas_population_by_year AS
@@ -71,14 +75,15 @@ pip install -r requirements.txt
     
          _A different analyst wants to know about population and unemployment rates of the US at the county level._
 
-         **Query:  **
+         **Query:**
 
-         Pivots the population and unemployment from 2 different sources into respective temp tables and joins the temp tables on the county and year columns. Then inserts it into a new fact table ___counties_population_unemployment_rate_by_year___ for querying.
+         _Pivots the population and unemployment from 2 different sources into respective temp tables. Joins the temp tables on the county and year columns. Then inserts it into a new table ___counties_population_unemployment_rate_by_year___ for querying._
 
          ```sql
 
             DROP TABLE IF EXISTS temp_county_population_by_year;
-
+            
+            --COUNTY POPULATION DATA
             CREATE TEMPORARY TABLE IF NOT EXISTS temp_county_population_by_year AS
             SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
             FROM     population_estimates
@@ -116,7 +121,9 @@ pip install -r requirements.txt
             FROM     population_estimates
             WHERE    LSAD = 'County or equivalent';
 
+            --COUNTY UNEMPLOYMENT RATE DATA
             DROP TABLE IF EXISTS temp_county_unemployment_rate_by_year;
+            
             CREATE TEMPORARY TABLE IF NOT EXISTS temp_county_unemployment_rate_by_year AS
             SELECT   FIPS, Area_name, 2010 AS YEAR, Unemployment_rate_2010 AS UNEMPLOYMENT_RATE
             FROM     counties_unemployment
@@ -154,6 +161,7 @@ pip install -r requirements.txt
             FROM     counties_unemployment
             WHERE    FIPS <> 0;
 
+            --JOIN TO COMBINE POPULATION AND UNEMPLOYMENT RATE DATA POINTS INTO A NEW TABLE
             CREATE TABLE IF NOT EXISTS counties_population_unemployment_rate_by_year AS
             SELECT     P.[index] AS COUNTY_ID, P.NAME, P.YEAR, P.POPULATION, U.UNEMPLOYMENT_RATE
             FROM     temp_county_population_by_year P INNER JOIN
