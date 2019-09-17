@@ -14,15 +14,19 @@ pip install -r requirements.txt
 
 ### Steps to execute
 
-1. Run [sqlite_load_as_is.py] (https://github.com/samshetty/sqlite/blob/master/sqlite_load_as_is.py)
+1. Run [sqlite_load_as_is.py](https://github.com/samshetty/sqlite/blob/master/sqlite_load_as_is.py)
    This python program downloads the online census data files, connects to sqlite, creates staging tables and loads the raw data into them
 
-2. Run the below queries for the 2 Analyst requirements to get data in the required format (metric with dimensions) 
+2. Run the below queries to get data in the required final format (metric with dimensions) 
     1. **For Analyst requirement #1:**
-       _You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time._
+
+      _You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time._
+      
        **Query:  **
+       
        --Pivot the population data into a metric and puts it into a fact table for easy querying
-  ```sql
+       
+       ```sql
   CREATE TABLE IF NOT EXISTS metropolitan_areas_population_by_year AS
   SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
   FROM     population_estimates
@@ -60,14 +64,18 @@ pip install -r requirements.txt
   FROM     population_estimates
   WHERE    LSAD = 'Metropolitan Statistical Area'
 
-```
+   ```
     
     2. **For Analyst requirement #2:** 
+    
        _A different analyst wants to know about population and unemployment rates of the US at the county level._
-       **Query:  **
-       --Pivot the population and unemployment from 2 different sources into respective temp tables and join the 2 tables on the county column and year. Then insert it into a new fact table for querying
        
-```
+       **Query:  **
+       
+       Pivot the population and unemployment from 2 different sources into respective temp tables and join the 2 tables on the county column and year. Then insert it into a new fact table for querying
+       
+   ```
+
 DROP TABLE IF EXISTS temp_county_population_by_year;
 
 CREATE TEMPORARY TABLE IF NOT EXISTS temp_county_population_by_year AS
