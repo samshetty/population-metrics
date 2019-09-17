@@ -32,7 +32,8 @@ def load_data_into_staging_tables(conn, file_urls):
 
 def main():
     try:
-        db_file_path = os.path.join(os.path.dirname('__file__'), 'database.sqlite3')
+        db_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.sqlite3')
+        
         file_urls = []
         file_urls.append(["population_estimates", "csv", "https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/metro/totals/cbsa-est2018-alldata.csv"])
         file_urls.append(["counties_unemployment", "xls", "https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.xls?v=9115.7"])
@@ -40,6 +41,7 @@ def main():
         conn = create_database_connection(db_file_path)
         with conn:
             load_data_into_staging_tables(conn, file_urls)
+        print("Staging files loaded succesfully into {0}.".format(db_file_path))
     except Exception as e:
         print("Error: ", e)
 
