@@ -18,48 +18,48 @@ pip install -r requirements.txt
   This python program downloads the online census data files, connects to sqlite, creates staging tables and loads the raw data
 
 2. Next, run the below queries for the 2 Analyst requirements to get data in the required format (metric with dimensions) 
-    1. **Task #1 - You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time. **
-```
---Pivots the population column into a metric from the staging data, and puts it into a fact table for easy querying
-CREATE TABLE IF NOT EXISTS metropolitan_areas_population_by_year AS
-SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2011 AS YEAR, POPESTIMATE2011 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2012 AS YEAR, POPESTIMATE2012 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2013 AS YEAR, POPESTIMATE2013 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2014 AS YEAR, POPESTIMATE2014 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2015 AS YEAR, POPESTIMATE2015 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2016 AS YEAR, POPESTIMATE2016 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2017 AS YEAR, POPESTIMATE2017 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
-UNION ALL
-SELECT   [index], NAME, 2018 AS YEAR, POPESTIMATE2018 AS POPULATION
-FROM     population_estimates
-WHERE    LSAD = 'Metropolitan Statistical Area'
+    1. **Task #1 - You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time.**
+  ```
+  --Pivots the population column into a metric from the staging data, and puts it into a fact table for easy querying
+  CREATE TABLE IF NOT EXISTS metropolitan_areas_population_by_year AS
+  SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2011 AS YEAR, POPESTIMATE2011 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2012 AS YEAR, POPESTIMATE2012 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2013 AS YEAR, POPESTIMATE2013 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2014 AS YEAR, POPESTIMATE2014 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2015 AS YEAR, POPESTIMATE2015 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2016 AS YEAR, POPESTIMATE2016 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2017 AS YEAR, POPESTIMATE2017 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
+  UNION ALL
+  SELECT   [index], NAME, 2018 AS YEAR, POPESTIMATE2018 AS POPULATION
+  FROM     population_estimates
+  WHERE    LSAD = 'Metropolitan Statistical Area'
 
 ```
-   2. **Task #2 - A different analyst wants to know about population and unemployment rates of the US at the county level.**
+    2. **Task #2 - A different analyst wants to know about population and unemployment rates of the US at the county level.**
 ```
 --Pivot the population and unemployment from 2 different sources into respective temp tables and join the 2 tables on the county column and year. Then insert it into a new fact table for querying
 DROP TABLE IF EXISTS temp_county_population_by_year;
