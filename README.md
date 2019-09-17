@@ -31,7 +31,10 @@ pip install -r requirements.txt
          _Converts population columns for each year into a metric and puts it into a new table ___metropolitan_areas_population_by_year___ for easy querying._
        
          ```sql
-           CREATE TABLE IF NOT EXISTS metropolitan_areas_population_by_year AS
+         
+           DROP TABLE IF EXISTS metropolitan_areas_population_by_year;
+           
+           CREATE TABLE metropolitan_areas_population_by_year AS
            SELECT   [index], NAME, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
            FROM     population_estimates
            WHERE    LSAD = 'Metropolitan Statistical Area'
@@ -76,7 +79,7 @@ pip install -r requirements.txt
 
          **Query:**
 
-         _Pivots the population and unemployment from 2 different sources into respective temp tables. Joins the temp tables on the county and year columns. Then inserts it into a new table ___counties_population_unemployment_rate_by_year___ for querying._
+         _Pivots the population and unemployment rate numbers from the 2 staging tables and creates respective temp tables. Joins the temp tables on the county and year columns. Then inserts it into a new table ___counties_population_unemployment_rate_by_year___ for querying._
 
          ```sql
 
@@ -159,9 +162,11 @@ pip install -r requirements.txt
             SELECT   FIPS, Area_name, 2018 AS YEAR, Unemployment_rate_2018 AS UNEMPLOYMENT_RATE
             FROM     counties_unemployment
             WHERE    FIPS <> 0;
-
-            --JOIN TO COMBINE POPULATION AND UNEMPLOYMENT RATE DATA POINTS INTO A NEW TABLE
-            CREATE TABLE IF NOT EXISTS counties_population_unemployment_rate_by_year AS
+            
+            DROP TABLE IF EXISTS counties_population_unemployment_rate_by_year;
+            
+            --JOIN THE POPULATION AND UNEMPLOYMENT RATE NUMBERS ON COUNTY AND YEAR AND INSERT INTO FINAL TABLE
+            CREATE TABLE counties_population_unemployment_rate_by_year AS
             SELECT     P.[index] AS COUNTY_ID, P.NAME, P.YEAR, P.POPULATION, U.UNEMPLOYMENT_RATE
             FROM     temp_county_population_by_year P INNER JOIN
                     temp_county_unemployment_rate_by_year U ON P.NAME = U.Area_name AND P.YEAR = U.YEAR
