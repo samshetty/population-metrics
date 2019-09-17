@@ -19,10 +19,9 @@ pip install -r requirements.txt
    This python program loads the below census data files into sqlite staging tables.
    
    https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/metro/totals/cbsa-est2018-alldata.csv
-   https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/counties/totals/co-est2018-alldata.csv
    https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.xls?v=9115.7
 
-2. Run the below queries in a client like [DB Browser SQLite](https://sqlitebrowser.org/dl/) to get the data in the required format of a metric with several dimensions.
+2. Run the below queries in a client like [DB Browser SQLite](https://sqlitebrowser.org/dl/) and convert the Analyst data into the required format of a metric with several dimensions.
     1. **Analyst requirement #1:**
 
          _You are working with an analyst that would like to be able to graph the population of any major metropolitan area in the US over time._
