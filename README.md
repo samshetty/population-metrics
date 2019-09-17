@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 1. Run [sqlite_load_as_is.py](https://github.com/samshetty/sqlite/blob/master/sqlite_load_as_is.py)
 
-   This python program downloads the online census data files, connects to sqlite, creates staging tables and loads the raw data into them.
+   This python program downloads the online census data files, creates staging tables in sqlite and loads raw data into them.
 
 2. Run the below queries to get data in the required final format (metric with dimensions) 
     1. **Analyst requirement #1:**
@@ -25,7 +25,7 @@ pip install -r requirements.txt
       
          **Query:**
 
-         Pivots the population data into a metric and puts it into a fact table ___metropolitan_areas_population_by_year___ for easy querying.
+         Converts population columns for each year into a metric and puts it into a fact table ___metropolitan_areas_population_by_year___ for easy querying.
        
          ```sql
            CREATE TABLE IF NOT EXISTS metropolitan_areas_population_by_year AS
@@ -69,13 +69,13 @@ pip install -r requirements.txt
     
     2. **For Analyst requirement #2:** 
     
-             _A different analyst wants to know about population and unemployment rates of the US at the county level._
+         _A different analyst wants to know about population and unemployment rates of the US at the county level._
 
          **Query:  **
 
-             Pivots the population and unemployment from 2 different sources into respective temp tables and joins the temp tables on the county and year columns. Then inserts it into a new fact table ___counties_population_unemployment_rate_by_year___ for querying.
+         Pivots the population and unemployment from 2 different sources into respective temp tables and joins the temp tables on the county and year columns. Then inserts it into a new fact table ___counties_population_unemployment_rate_by_year___ for querying.
 
-            ```
+         ```sql
 
             DROP TABLE IF EXISTS temp_county_population_by_year;
 
@@ -163,7 +163,7 @@ pip install -r requirements.txt
             SELECT     ROWID, *
             FROM     counties_population_unemployment_rate_by_year
             ORDER BY NAME, YEAR
-            ```
+         ```
 
 ## Author
 
