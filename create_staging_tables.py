@@ -35,7 +35,7 @@ def create_staging_table(database_connection, table_name, data):
     table_name: name of staging table to create
     data: data to load in the staging
     """
-    cursor = database_connection.cursor()
+    cursor = database_connection.cursor() 
     sql_drop_table_if_exists = 'DROP TABLE IF EXISTS ' + table_name
     cursor.execute(sql_drop_table_if_exists)
     data.to_sql(name=table_name, con=database_connection)
