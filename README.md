@@ -14,7 +14,7 @@ Load online census data files into sqlite staging tables. Then transform the dat
    pip install -r requirements.txt
    ```
    
-3. Run [sqlite_load_as_is.py](https://github.com/samshetty/sqlite/blob/master/sqlite_load_as_is.py)
+3. Run [create_staging_tables.py](https://github.com/samshetty/population-metrics/blob/master/create_staging_tables.py)
 
    ```
    python sqlite_load_as_is.py
