@@ -4,9 +4,9 @@ Load online census data files into sqlite staging tables. Then transform the dat
 
 Final sqlite database with data in the required format is [database.sqlite3](https://github.com/samshetty/population-metrics/blob/master/database.sqlite3).
 
-Database Table for Analyst requirement #1: __metropolitan_areas_population_by_year__
+Final data as required by Analyst requirement #1: __metropolitan_areas_population_by_year table__
 
-Database Table for Analyst requirement #2: __counties_population_unemployment_rate_by_year__
+Final data as required by Analyst requirement #2: __counties_population_unemployment_rate_by_year table__
 
 
 ## Getting Started
@@ -191,9 +191,9 @@ Database Table for Analyst requirement #2: __counties_population_unemployment_ra
 
 After running the above steps, the below tables in the sqlite database have the data in the required format for Analysts to use. Final sqlite database with data in the required format is [database.sqlite3](https://github.com/samshetty/population-metrics/blob/master/database.sqlite3).
 
-Database Table for Analyst requirement #1: __metropolitan_areas_population_by_year__
+Final data as required by Analyst requirement #1: __metropolitan_areas_population_by_year table__
 
-Database Table for Analyst requirement #2: __counties_population_unemployment_rate_by_year__
+Final data as required by Analyst requirement #2: __counties_population_unemployment_rate_by_year table__
 
 ## Author
 
