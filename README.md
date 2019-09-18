@@ -35,48 +35,48 @@ Load online census data files into sqlite staging tables. Then transform the dat
          _Converts population columns for each year into a metric and puts it into a new table ___metropolitan_areas_population_by_year___ for easy querying._
        
          ```sql
-         
-           DROP TABLE IF EXISTS metropolitan_areas_population_by_year;
-           
-           CREATE TABLE metropolitan_areas_population_by_year AS
+            DROP TABLE IF EXISTS metropolitan_areas_population_by_year;
+
+            CREATE TABLE metropolitan_areas_population_by_year AS
             WITH population_data_cte AS
             (
-               SELECT   [index] AS AREA_ID, NAME AS [METROPOLITAN_AREA], POPESTIMATE2010, POPESTIMATE2011, 
+                SELECT   [index] AS AREA_ID, NAME AS [METROPOLITAN_AREA], POPESTIMATE2010, POPESTIMATE2011, 
                         POPESTIMATE2012, POPESTIMATE2013, POPESTIMATE2014, POPESTIMATE2015, 
                         POPESTIMATE2016, POPESTIMATE2017, POPESTIMATE2018
-               FROM     population_estimates
-               WHERE    LSAD = 'Metropolitan Statistical Area'
+                FROM     population_estimates
+                WHERE    LSAD = 'Metropolitan Statistical Area'
             ) 
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2011 AS YEAR, POPESTIMATE2011 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2012 AS YEAR, POPESTIMATE2012 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2013 AS YEAR, POPESTIMATE2013 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2014 AS YEAR, POPESTIMATE2014 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2015 AS YEAR, POPESTIMATE2015 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2016 AS YEAR, POPESTIMATE2016 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2017 AS YEAR, POPESTIMATE2017 AS POPULATION
-              FROM     population_data_cte
-              UNION ALL
-              SELECT   AREA_ID, METROPOLITAN_AREA, 2018 AS YEAR, POPESTIMATE2018 AS POPULATION
-              FROM     population_data_cte;
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2010 AS YEAR, POPESTIMATE2010 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2011 AS YEAR, POPESTIMATE2011 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2012 AS YEAR, POPESTIMATE2012 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2013 AS YEAR, POPESTIMATE2013 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2014 AS YEAR, POPESTIMATE2014 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2015 AS YEAR, POPESTIMATE2015 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2016 AS YEAR, POPESTIMATE2016 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2017 AS YEAR, POPESTIMATE2017 AS POPULATION
+            FROM     population_data_cte
+            UNION ALL
+            SELECT   AREA_ID, METROPOLITAN_AREA, 2018 AS YEAR, POPESTIMATE2018 AS POPULATION
+            FROM     population_data_cte;
 
-              SELECT 	* 
-              FROM 		metropolitan_areas_population_by_year 
-              ORDER BY METROPOLITAN_AREA, YEAR
+            SELECT 	* 
+            FROM 		metropolitan_areas_population_by_year 
+            ORDER BY METROPOLITAN_AREA, YEAR
+
          ```
     
     2. **For Analyst requirement #2:** 
